@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .column {
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Comparison</h1>
+
+    <div id="videoContainer"></div>
+
+    <script>
+        // Generate filenames dynamically from 000000 to 000099
+        const videoFiles = [];
+        for (let i = 0; i < 100; i++) {
+            videoFiles.push(String(i).padStart(6, '0') + '.mp4');
+        }
+
+        // Folder structure
+        const folders = {
+            source: 'img_/img',
+            pose: 'ske_/ske',
+            generated: '0_/0'
+        };
+
+        const container = document.getElementById('videoContainer');
+
+        videoFiles.forEach(videoName => {
+            const row = document.createElement('div');
+            row.classList.add('row');
+
+            // Source Column
+            const sourceColumn = document.createElement('div');
+            sourceColumn.classList.add('column');
+            sourceColumn.innerHTML = `
+                <h2>Source</h2>
+                <video controls>
+                    <source src="${folders.source}/${videoName}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+
+            // Pose Column
+            const poseColumn = document.createElement('div');
+            poseColumn.classList.add('column');
+            poseColumn.innerHTML = `
+                <h2>Pose</h2>
+                <video controls>
+                    <source src="${folders.pose}/${videoName}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+
+            // Generated Column
+            const generatedColumn = document.createElement('div');
+            generatedColumn.classList.add('column');
+            generatedColumn.innerHTML = `
+                <h2>Generated</h2>
+                <video controls>
+                    <source src="${folders.generated}/${videoName}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+
+            row.appendChild(sourceColumn);
+            row.appendChild(poseColumn);
+            row.appendChild(generatedColumn);
+            container.appendChild(row);
+        });
+    </script>
+</body>
+</html>
